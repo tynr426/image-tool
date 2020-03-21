@@ -6,7 +6,8 @@
 **/node_modules/
 log/
 **/log/
-
+/scale
+/source
 
 ## 排除文件类型
 .zip
