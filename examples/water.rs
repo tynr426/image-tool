@@ -15,18 +15,20 @@ fn main() {
     // } else {
     //     panic!("Please enter a target file path")
     // };
-
-    let path = Path::new("./source/33.jpg");
-    let input_path = "./source/5_1024.jpg";
-    //let mut image = image::open(input_path).unwrap();
-    let mut image = open(input_path)
-        .expect(&format!("Could not load image at {:?}", input_path))
+    add_water_mark("./source/5_1024.jpg","./source/33.jpg","快马批发",12.4,"BOTTOM_RIGHT");
+   
+    
+}
+fn add_water_mark(source_path:&str,target_path:&str,water_text:&str,font_size:f32,position:&str){
+    let path = Path::new(target_path);
+     //let mut image = image::open(input_path).unwrap();
+    let mut image = open(source_path)
+        .expect(&format!("Could not load image at {:?}", source_path))
         .to_rgb();
-
-    //let mut image = img.grayscale();
+         //let mut image = img.grayscale();
     //let black = Rgba([0u8, 0u8, 0u8, 0u8]);
     let black = Rgb([7u8, 255u8, 255u8]);
-    //let mut image = RgbImage::new(200, 200);
+        //let mut image = RgbImage::new(200, 200);
     let bytes = include_bytes!("HYXinHaiXingKaiW.ttf");
     let font = Vec::from(bytes as &[u8]);
     let font = FontCollection::from_bytes(font)
@@ -43,10 +45,9 @@ fn main() {
     let mut _water_mark_width: f32 = 0.0;
     let mut _water_mark_height: f32 = 0.0;
     //比例
-    let mut bl: f32 = 1.0;
+    let mut bl: f32 = 0.0;
 
-    let water_text = "快马批发";
-    let tx = 12.4;
+    let tx = font_size;
     let scale = Scale { x: tx, y: tx };
     let water_mark_width = tx * water_text.len() as f32;
     let water_mark_height = 50.0;
@@ -74,8 +75,7 @@ fn main() {
     if _water_mark_height == _height {
         _water_mark_height = _water_mark_height - 10.0;
     }
-    let _water_mark_position = "BOTTOM_RIGHT";
-    match _water_mark_position {
+    match position {
         "TOP_LEFT" => {
             xpos = 10;
             ypos = 10;
